@@ -1,10 +1,15 @@
 package com.revature.eval.java.core;
 
+import java.util.Scanner;
 import java.time.temporal.Temporal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 public class EvaluationService {
+
+	private Scanner in;
 
 	/**
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
@@ -29,8 +34,19 @@ public class EvaluationService {
 	 * @param phrase
 	 * @return
 	 */
+	
 	public String acronym(String phrase) {
-		// TODO Write an implementation for this method declaration
+		
+		in = new Scanner(System.in);
+			
+		System.out.println("Enter name:");
+		String first = in.next();
+		String second = in.next();
+		String third = in.next();
+		String fourth = in.next();
+		
+		String acronym = first.substring(0, 1)+ second.substring(0, 1)+ third.substring(0, 1) +fourth.substring(0, 1);
+		System.out.println(acronym);
 		return null;
 	}
 
@@ -58,7 +74,9 @@ public class EvaluationService {
 			this.sideTwo = sideTwo;
 			this.sideThree = sideThree;
 		}
-
+			public static void main(String[] args) {
+			System.out.println("Enter the sides of your triangle:  ");	
+			}
 		public double getSideOne() {
 			return sideOne;
 		}
@@ -84,21 +102,32 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo && sideTwo == sideThree)
+			return false;
+			System.out.println("This triangle is equalateral.");
 			return false;
 		}
 
 		public boolean isIsosceles() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne == sideTwo && sideOne != sideThree && sideTwo == sideThree)
 			return false;
+			System.out.println("This triangle is isosceles.");
+			return false; 
+			
 		}
 
 		public boolean isScalene() {
-			// TODO Write an implementation for this method declaration
+			if (sideOne != sideTwo && sideTwo != sideThree)
 			return false;
+			System.out.println("This triangle is scalene.");
+			return false;
+			
 		}
 
 	}
+
+
+
 
 	/**
 	 * 4. Given a word, compute the scrabble score for that word.
@@ -115,8 +144,25 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+	char []	letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L' , 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+	int  [] values = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};	
+	
+	Scanner words = new Scanner(System.in);
+	
 	public int getScrabbleScore(String string) {
-		// TODO Write an implementation for this method declaration
+		System.out.println("Enter your words here: ");
+		String build = words.nextLine();
+		int score = 0;
+		for(int i =0; i < build.length(); i++) {
+			for(int j = 0; j < 26; j++) {
+				if(build.charAt(i) ==(letters[j]))
+				{
+					values[j] +=score;
+				}
+			}
+			System.out.println("The score for your word is:" +score);
+			
+		}
 		return 0;
 	}
 
@@ -151,9 +197,13 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public String cleanPhoneNumber(String number, String countryCode) {
+		String out = number.replaceAll("(^[0-9\\+]","")
+						.substring(1, 2)
+						.replaceAll("(.)(\\++)(.)", countryCode+"$1")
+						.replaceAll("(^0{2}|^\\+)(.+)", "$2")
+						.replaceAll("^0([1-9])", countryCode+"$1");
+		return out;
 	}
 
 	/**
@@ -165,10 +215,23 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public Map<String, Integer> wordCount(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+	public Map<String, Integer> wordCount(String[] strings) {
+		Map<String, Integer> map = new HashMap<String, Integer> ();
+		for (String s:strings) {
+			
+			if (!map.containsKey(s)) { 
+				map.put(s, 1);
+		}
+		else {
+			int count = map.get(s);
+			map.put(s, count + 1);
+		}
 	}
+	return map;
+}
+		//create a method so it recognizes the characters in the word and increase the counter. 
+		
+	
 
 	/**
 	 * 7. Implement a binary search algorithm.
@@ -209,7 +272,7 @@ public class EvaluationService {
 		private List<T> sortedList;
 
 		public int indexOf(T t) {
-			// TODO Write an implementation for this method declaration
+			//TODO method for Binary Search. 
 			return 0;
 		}
 
