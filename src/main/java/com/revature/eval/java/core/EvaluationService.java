@@ -37,13 +37,14 @@ public class EvaluationService {
 	
 	public String acronym(String phrase) {
 		
-		in = new Scanner(System.in);
+		Scanner in = new Scanner(System.in);
 			
 		System.out.println("Enter name:");
 		String first = in.next();
 		String second = in.next();
 		String third = in.next();
 		String fourth = in.next();
+		
 		
 		String acronym = first.substring(0, 1)+ second.substring(0, 1)+ third.substring(0, 1) +fourth.substring(0, 1);
 		System.out.println(acronym);
@@ -74,8 +75,7 @@ public class EvaluationService {
 			this.sideTwo = sideTwo;
 			this.sideThree = sideThree;
 		}
-			public static void main(String[] args) {
-			System.out.println("Enter the sides of your triangle:  ");	
+			public static void main(String[] args) {	
 			}
 		public double getSideOne() {
 			return sideOne;
@@ -103,14 +103,14 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			if (sideOne == sideTwo && sideTwo == sideThree)
-			return false;
-			System.out.println("This triangle is equalateral.");
+			
+			System.out.println("This triangle is equilateral.");
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			if (sideOne == sideTwo && sideOne != sideThree && sideTwo == sideThree)
-			return false;
+			
 			System.out.println("This triangle is isosceles.");
 			return false; 
 			
@@ -118,7 +118,7 @@ public class EvaluationService {
 
 		public boolean isScalene() {
 			if (sideOne != sideTwo && sideTwo != sideThree)
-			return false;
+		
 			System.out.println("This triangle is scalene.");
 			return false;
 			
@@ -144,7 +144,7 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	char []	letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L' , 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+	char []	letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 	int  [] values = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};	
 	
 	Scanner words = new Scanner(System.in);
@@ -217,6 +217,11 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String[] strings) {
 		Map<String, Integer> map = new HashMap<String, Integer> ();
+		
+		String text = "\n        Enter all text here  \n ";
+		String newLine = System.getProperty("line.separator");
+		System.out.println(newLine.contains("\n"));
+		System.out.println(newLine.contains("\\n"));
 		for (String s:strings) {
 			
 			if (!map.containsKey(s)) { 
@@ -271,11 +276,19 @@ public class EvaluationService {
 	static class BinarySearch<T> {
 		private List<T> sortedList;
 
-		public int indexOf(T t) {
-			//TODO method for Binary Search. 
-			return 0;
-		}
-
+		public static boolean Search(int [] array, int x) {
+			int left = 0;
+			int right = array.length - 1;
+			while(left <= right) {
+				int mid = left +((right - left) /2);
+				if (array[mid] == x) {
+					return true;
+				} else if (x < array[mid]) {
+					right = mid -1;
+				} else 
+					
+				return false;
+			}	
 		public BinarySearch(List<T> sortedList) {
 			super();
 			this.sortedList = sortedList;
@@ -308,10 +321,25 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
+			
+		
 	public String toPigLatin(String string) {
-		// TODO Write an implementation for this method declaration
-		return null;
+		
+	String words = words.toLowerCase();
+	char[] vowels = {'a', 'e', 'i', 'o', 'u'};
+	char first = words.charAt(0);
+	
+	
+	for (int i = 0; i < vowels.length; i++) {
+		if (first == vowels[i]) {
+			return words + "ay";
+		}
+		else if(first != vowels[i]) { // my attempt at putting the first letter and 'ay' sound at the end. 
+			return words.substring(1)+words.charAt(0)+"ay";
+		}
 	}
+	return words;
+	}	
 
 	/**
 	 * 9. An Armstrong number is a number that is the sum of its own digits each
@@ -329,10 +357,22 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isArmstrongNumber(int input) {
-		// TODO Write an implementation for this method declaration
-		return false;
-	}
-
+	
+		Scanner s = new Scanner(System.in);
+		 System.out.println("Enter your number: \n");
+		 int x = s.nextInt();
+		while (x != 0) {
+		int i = x%10
+		  ;
+		input /= 10;
+		}  //couldn't figure how to raise the input by the number of digits. 
+		if(x == input)
+			System.out.println(x + "is an Armstrong");
+		else 
+			System.out.println(x + "is not an Armstrong");
+			}
+	
+		
 	/**
 	 * 10. Compute the prime factors of a given natural number.
 	 * 
@@ -344,7 +384,7 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		// TODO Write an implementation for this method declaration
+		//int number = 0; See if the number can be split up any more than itself and another number. 
 		return null;
 	}
 
@@ -380,14 +420,34 @@ public class EvaluationService {
 		public RotationalCipher(int key) {
 			super();
 			this.key = key;
-		}
+		
+			Scanner sc = new Scanner(System.in);
+			//sc = next /plaintext Scanner - Scan the plaintext from the user. 
+			
+			
+			//keep lowercase letters the same. 
+			if (islower(text[i]))
 
+		}
 		public String rotate(String string) {
-			// TODO Write an implementation for this method declaration
-			return null;
+			//public String = "Plaintext from user."
 		}
-
-	}
+		//	public void doCypher() {
+		/*		for (int i = 0; i < String.length(text); i++) 
+		*			if (String >= 'a' && <='z') {
+		*				System.out.println(String + this.key)% 26 + 'a');
+		*			}
+		*			else if (String >= 'A' && <='Z') {
+		*				System.out.println(String + this.key)% 26 + 'A');
+					}
+						
+			public Integer getKey(int key) {
+				return this.key;
+		}				
+			return null;
+				}		
+			}
+}
 
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
@@ -402,7 +462,24 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int calculateNthPrime(int i) {
-		// TODO Write an implementation for this method declaration
+		
+		int num = 1;
+		int count = 0;
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter a number to determine the prime: ");
+		int n = sc.nextInt();
+		while (count < n) {
+			num = num + 1;
+			for (i = 2; i <= num; i++) {
+				if (num % i == 0){
+					break;
+				}
+			}
+			if ( i == num) {
+				count = count +1;
+			}
+			System.out.println("the nth prime is:    ");
+		}
 		return 0;
 	}
 
@@ -442,7 +519,7 @@ public class EvaluationService {
 			// TODO Write an implementation for this method declaration
 			return null;
 		}
-
+//check the cypher from cs50. 
 		/**
 		 * Question 14
 		 * 
@@ -600,8 +677,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		// TODO Write an implementation for this method declaration}
+		return 0;}
 	}
-
-}
+	}
+	
+	
