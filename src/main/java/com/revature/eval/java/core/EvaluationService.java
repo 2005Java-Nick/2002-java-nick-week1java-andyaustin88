@@ -52,7 +52,7 @@ public class EvaluationService {
 		
 		String acronym = first.substring(0, 1)+ second.substring(0, 1)+ third.substring(0, 1) +fourth.substring(0, 1);
 		System.out.println(acronym);
-		return null;
+		return acronym;
 	}
 
 	/**
@@ -174,7 +174,7 @@ public class EvaluationService {
 			System.out.println("The score for your word is:" +score);
 			
 		}
-		return 0;
+		return score;
 	}
 
 	/**
@@ -321,8 +321,10 @@ public class EvaluationService {
 		return sortedList;
 	}
 	
-	public void setSortedList(List<T> sortedList) {
+	public int setSortedList(List<T> sortedList) {
 		this.sortedList = sortedList;
+		
+		return 1;
 	}
 }	
 	// had to look this up and still wasn't quite sure what to do. 
@@ -456,9 +458,9 @@ public class EvaluationService {
 		public RotationalCipher(int key) {
 			super();
 			this.key = key;
+		}
 		
-		
-			
+		public String rotate(String string) {	
 			Scanner in = new Scanner(System.in);
 			int length = Integer.parseInt(in.nextLine());
 			String str = in.nextLine();
@@ -469,6 +471,7 @@ public class EvaluationService {
 		System.out.println(rotationalCipher(str, length, key));
 		
 		in.close();
+		return null;
 		}
 		
 		private static String rotationalCipher(String str, int length, int rotate)
@@ -488,7 +491,7 @@ public class EvaluationService {
 			}
 			strBuilder.append(c);
 		}
-		return strBuilder.toString();
+		return "";
 	}			
 }
 	
@@ -504,26 +507,26 @@ public class EvaluationService {
 	 * @param i
 	 * @return
 	 */
-	public int calculateNthPrime(int i) {
+	public boolean calculateNthPrime(int i) {
 		
 		int num = 1;
 		int count = 0;
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter a number to determine the prime: ");
+		boolean check = false;
 		int n = sc.nextInt();
 		while (count < n) {
 			num = num + 1;
-			for (i = 2; i <= num; i++) {
-				if (num % i == 0){
-					break;
+			for (i = 2; i <= num/2; i++) {
+				if (num % i == 0)
+				{
+					check = true;
 				}
 			}
-			if ( i == num) {
-				count = count +1;
+			if(!check) {
+				return false;
 			}
-			System.out.println("the nth prime is:    ");
-		}
-		return 0;
+		} 
+		return true;
 	}
 
 	/**
@@ -592,7 +595,7 @@ public class EvaluationService {
 				} System.out.println(encodeText + str);
 			}in.close();
 			
-			return null;
+			return (encodeText + str);
 		}
 //check the cypher from cs50. 
 		/**
@@ -632,7 +635,7 @@ public class EvaluationService {
 				} System.out.println(decodeText);
 			}in.close();
 			
-			return null;
+			return (decodeText);
 		}
 	}
 
@@ -721,7 +724,7 @@ public class EvaluationService {
 		LocalDateTime timePoint = LocalDateTime.now();
 		LocalDateTime newDateTime = timePoint.plus(1000000000, ChronoUnit.SECONDS.HOURS.DAYS.YEARS);
 		System.out.println(newDateTime);
-		return null;
+		return (newDateTime);
 	}  
 		
 		
@@ -838,7 +841,7 @@ public class EvaluationService {
 			}
 		}
 		
-		return 1;
+		return (result);
 		}
 		
 }		
