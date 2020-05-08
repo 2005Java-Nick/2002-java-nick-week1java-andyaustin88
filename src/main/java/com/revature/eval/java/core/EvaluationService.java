@@ -2,12 +2,15 @@ package com.revature.eval.java.core;
 
 import java.util.Scanner;
 import java.lang.reflect.Array;
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class EvaluationService {
 
@@ -474,7 +477,7 @@ public class EvaluationService {
 		char c;
 		for (int i = 0; i < length; i++)
 		{
-			c = str.charAt(i); // shift the string on if C is a character. If it's a letter, leave it alone!
+			c = str.charAt(i); // shift the string on if C is a character. If it's a number, leave it alone!
 			if (Character.isLetter(c))
 			{// make sure to check if the character is capitalized. 
 				c = (char) (str.charAt(i) + rotate);
@@ -487,7 +490,8 @@ public class EvaluationService {
 		}
 		return strBuilder.toString();
 	}			
-}			
+}
+	
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
 	 * 
@@ -561,6 +565,8 @@ public class EvaluationService {
 			Scanner in = new Scanner(System.in);
 			String letters = "abcdefghijklmnopqrstuvwxyz";
 			String reverse = " ";
+			StringBuilder str = new StringBuilder();
+			str.insert(6, ' ');
 			
 			for (int i= letters.length()-1; i > -1; i++){
 				reverse += letters.charAt(i);
@@ -583,8 +589,8 @@ public class EvaluationService {
 						break;
 					}
 				}
-				} System.out.println(encodeText);
-			}in.close();// couldn't figure out how to space every five characters. 
+				} System.out.println(encodeText + str);
+			}in.close();
 			
 			return null;
 		}
@@ -596,7 +602,36 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String decode(String string) {
-			// TODO Write an implementation for this method declaration
+			Scanner in = new Scanner(System.in);
+			String letters = "abcdefghijklmnopqrstuvwxyz";
+			String reverse = " ";
+			StringBuilder str = new StringBuilder();
+			str.insert(6, ' ');
+			
+			for (int i= letters.length()-1; i > -1; i++){
+				reverse += letters.charAt(i);
+			}
+			String message = in.nextLine();
+			in.nextLine();
+			
+			message = message.toLowerCase();
+			
+			String decodeText = "";
+			
+			for (int i = 0; i < message.length(); i++) {
+				if(message.charAt(i) ==(char)32) {
+					decodeText += " ";
+				} else {
+					int count= 0;
+				for (int j =0; j <reverse.length(); j++) {
+					if (message.charAt(i) == reverse.charAt(j)) {
+						decodeText += letters.charAt(j);
+						break;
+					}
+				}
+				} System.out.println(decodeText);
+			}in.close();
+			
 			return null;
 		}
 	}
@@ -674,14 +709,23 @@ public class EvaluationService {
 	 * 
 	 * A gigasecond is 109 (1,000,000,000) seconds.
 	 * 
+	 *
+	 * 
 	 * @param given
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		// TODO Write an implementation for this method declaration
 		return null;
-	}
-
+		
+		//cannot get rid of the errors. 
+	} 
+		
+		
+		
+		
+		
+		// Constructs a Gigasecond object for a specific date but not hours or anything. 
+		
 	/**
 	 * 18. Given a number, find the sum of all the unique multiples of particular
 	 * numbers up to but not including that number.
@@ -793,10 +837,5 @@ public class EvaluationService {
 		return 1;
 		}
 		
-
-	public static boolean islower(Object object) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 }		
 	
