@@ -1,7 +1,9 @@
 package com.revature.eval.java.core;
 
 import java.util.Scanner;
+import java.lang.reflect.Array;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +11,6 @@ import java.util.Map;
 
 public class EvaluationService {
 
-	private Scanner in;
 
 	/**
 	 * 1. Without using the StringBuilder or StringBuffer class, write a method that
@@ -102,26 +103,30 @@ public class EvaluationService {
 		}
 
 		public boolean isEquilateral() {
-			if (sideOne == sideTwo && sideTwo == sideThree)
+			if ((sideOne == sideTwo + sideThree) ||
+			   (sideTwo == sideOne + sideThree) ||
+			   (sideThree == sideTwo + sideOne))
+				return true;
+			else 
+				return false;
 			
-			System.out.println("This triangle is equilateral.");
-			return false;
 		}
 
 		public boolean isIsosceles() {
-			if (sideOne == sideTwo && sideOne != sideThree && sideTwo == sideThree)
-			
-			System.out.println("This triangle is isosceles.");
+			if ((sideOne == sideTwo && sideTwo != sideThree) ||
+			    (sideOne == sideThree && sideTwo != sideThree) ||
+			    (sideTwo == sideThree && sideOne != sideTwo))
+			return true;
+		else 
 			return false; 
 			
 		}
 
 		public boolean isScalene() {
-			if (sideOne != sideTwo && sideTwo != sideThree)
-		
-			System.out.println("This triangle is scalene.");
-			return false;
-			
+			if (sideOne == sideTwo || sideTwo == sideThree || sideOne == sideThree)
+				return false;
+		else
+			return true;
 		}
 
 	}
@@ -144,12 +149,15 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	char []	letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
-	int  [] values = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};	
+	
 	
 	Scanner words = new Scanner(System.in);
-	
+	//as for the switch it would be something like
+//	switch(letter){
+//	   case a: score +=1
 	public int getScrabbleScore(String string) {
+		char []	letters = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+		int  [] values = { 1, 3, 3, 2, 1, 4, 2, 4, 1, 8, 5, 1, 3, 1, 1, 3, 10, 1, 1, 1, 1, 4, 4, 8, 4, 10};	
 		System.out.println("Enter your words here: ");
 		String build = words.nextLine();
 		int score = 0;
@@ -197,14 +205,17 @@ public class EvaluationService {
 	 * Note: As this exercise only deals with telephone numbers used in
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
-	public String cleanPhoneNumber(String number, String countryCode) {
-		String out = number.replaceAll("(^[0-9\\+]","")
-						.substring(1, 2)
-						.replaceAll("(.)(\\++)(.)", countryCode+"$1")
-						.replaceAll("(^0{2}|^\\+)(.+)", "$2")
-						.replaceAll("^0([1-9])", countryCode+"$1");
-		return out;
-	}
+	public String cleanPhoneNumber(String number) {
+		String ph = number.replaceAll("([^0-9\\+]","");
+						if(ph.length()==10) {
+						return ph;
+						}
+						if(ph.length()!=10) {
+						throw new 
+						IllegalArgumentException();
+						}
+		return ph;
+	}// had to look this up. so confused by this one. 
 
 	/**
 	 * 6. Given a phrase, count the occurrences of each word in that phrase.
@@ -215,26 +226,25 @@ public class EvaluationService {
 	 * @param string
 	 * @return
 	 */
-	public Map<String, Integer> wordCount(String[] strings) {
-		Map<String, Integer> map = new HashMap<String, Integer> ();
+	public Map<String, Integer> wordCount(String string) {
+		Map<String, Integer> wordCount = new HashMap<String, Integer> ();
 		
-		String text = "\n        Enter all text here  \n ";
-		String newLine = System.getProperty("line.separator");
-		System.out.println(newLine.contains("\n"));
-		System.out.println(newLine.contains("\\n"));
-		for (String s:strings) {
-			
-			if (!map.containsKey(s)) { 
-				map.put(s, 1);
+		@SuppressWarnings("resource")
+		Scanner a = new Scanner(System.in);
+		System.out.println("Enter a String: ");
+		String word = a.nextLine();
+		
+		if (!wordCount.containsKey(word))
+			wordCount.put(word, 1);
+		else 
+			wordCount.put(word, wordCount.get(word) + 1);
+		return wordCount;
 		}
-		else {
-			int count = map.get(s);
-			map.put(s, count + 1);
-		}
-	}
-	return map;
-}
-		//create a method so it recognizes the characters in the word and increase the counter. 
+	
+		
+		
+ 
+		
 		
 	
 
@@ -273,36 +283,48 @@ public class EvaluationService {
 	 * binary search is a dichotomic divide and conquer search algorithm.
 	 * 
 	 */
-	static class BinarySearch<T> {
+	static class BinarySearch<T> { 
 		private List<T> sortedList;
-
-		public static boolean Search(int [] array, int x) {
-			int left = 0;
-			int right = array.length - 1;
-			while(left <= right) {
-				int mid = left +((right - left) /2);
-				if (array[mid] == x) {
-					return true;
-				} else if (x < array[mid]) {
-					right = mid -1;
-				} else 
-					
-				return false;
-			}	
-		public BinarySearch(List<T> sortedList) {
-			super();
-			this.sortedList = sortedList;
-		}
-
-		public List<T> getSortedList() {
-			return sortedList;
-		}
-
-		public void setSortedList(List<T> sortedList) {
-			this.sortedList = sortedList;
-		}
-
+		int[] array; 
+		public int Key;
+		public int indexOf(T t) {
+	int begin = 0;
+	int last = array.length -1;
+	int mid = 0;
+	
+	Scanner input = new Scanner(System.in);
+	while(begin <= last) {
+	mid = (begin + last) /2;
+	while(array[mid] < Key) {
+		begin = mid + 1;
 	}
+	if(array[mid] > Key) {
+		last = mid - 1;
+	}
+	else {
+		return mid;
+	}
+}
+		return -1;
+	}
+	
+	public BinarySearch(List<T> sortedList)	
+	{
+		super();
+		this.sortedList = sortedList;
+	}	
+	
+	public List<T> getSortedList(){
+		return sortedList;
+	}
+	
+	public void setSortedList(List<T> sortedList) {
+		this.sortedList = sortedList;
+	}
+}	
+	// had to look this up and still wasn't quite sure what to do. 
+		
+	
 
 	/**
 	 * 8. Implement a program that translates from English to Pig Latin.
@@ -325,20 +347,20 @@ public class EvaluationService {
 		
 	public String toPigLatin(String string) {
 		
-	String words = words.toLowerCase();
+	String phrases = string.toLowerCase();
 	char[] vowels = {'a', 'e', 'i', 'o', 'u'};
-	char first = words.charAt(0);
+	char first = phrases.charAt(0);
 	
 	
 	for (int i = 0; i < vowels.length; i++) {
 		if (first == vowels[i]) {
-			return words + "ay";
+			return phrases + "ay";
 		}
 		else if(first != vowels[i]) { // my attempt at putting the first letter and 'ay' sound at the end. 
-			return words.substring(1)+words.charAt(0)+"ay";
+			return phrases.substring(1)+phrases.charAt(0)+"ay";
 		}
 	}
-	return words;
+	return phrases;
 	}	
 
 	/**
@@ -354,23 +376,26 @@ public class EvaluationService {
 	 * a number is an Armstrong number.
 	 * 
 	 * @param input
-	 * @return
+	 * @return 
 	 */
-	public boolean isArmstrongNumber(int input) {
+	int number = new Scanner(System.in).nextInt();
+	public  boolean isArmstrongNumber(int input) {
 	
-		Scanner s = new Scanner(System.in);
-		 System.out.println("Enter your number: \n");
-		 int x = s.nextInt();
-		while (x != 0) {
-		int i = x%10
-		  ;
+		int result =0;
+		int orig = number;
+		while (number != 0) {
+			int remainder = number%10;
+			result = result +remainder*remainder*remainder;
+			number = number/10;
+		  
 		input /= 10;
 		}  //couldn't figure how to raise the input by the number of digits. 
-		if(x == input)
-			System.out.println(x + "is an Armstrong");
+		if(orig == input) {
+			return true;
+		}
 		else 
-			System.out.println(x + "is not an Armstrong");
-			}
+			return false;
+		}
 	
 		
 	/**
@@ -384,7 +409,15 @@ public class EvaluationService {
 	 * @return
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
-		//int number = 0; See if the number can be split up any more than itself and another number. 
+		
+		long x = number;
+		List<Long> factors = new ArrayList<Long>();
+		for(long i = 2; i <= x; i++) {
+			while (x % 1 == 0) {
+				factors.add(i);
+				x /= i;
+			}
+		}
 		return null;
 	}
 
@@ -416,39 +449,45 @@ public class EvaluationService {
 	 */
 	static class RotationalCipher {
 		private int key;
-
+		
 		public RotationalCipher(int key) {
 			super();
 			this.key = key;
 		
-			Scanner sc = new Scanner(System.in);
-			//sc = next /plaintext Scanner - Scan the plaintext from the user. 
+		
 			
-			
-			//keep lowercase letters the same. 
-			if (islower(text[i]))
-
+			Scanner in = new Scanner(System.in);
+			int length = Integer.parseInt(in.nextLine());
+			String str = in.nextLine();
+			this.key = Integer.parseInt(in.nextLine());
+		
+		this.key = key % 26;
+		
+		System.out.println(rotationalCipher(str, length, key));
+		
+		in.close();
 		}
-		public String rotate(String string) {
-			//public String = "Plaintext from user."
-		}
-		//	public void doCypher() {
-		/*		for (int i = 0; i < String.length(text); i++) 
-		*			if (String >= 'a' && <='z') {
-		*				System.out.println(String + this.key)% 26 + 'a');
-		*			}
-		*			else if (String >= 'A' && <='Z') {
-		*				System.out.println(String + this.key)% 26 + 'A');
-					}
-						
-			public Integer getKey(int key) {
-				return this.key;
-		}				
-			return null;
-				}		
+		
+		private static String rotationalCipher(String str, int length, int rotate)
+		{
+		StringBuilder strBuilder = new StringBuilder();
+		char c;
+		for (int i = 0; i < length; i++)
+		{
+			c = str.charAt(i); // shift the string on if C is a character. If it's a letter, leave it alone!
+			if (Character.isLetter(c))
+			{// make sure to check if the character is capitalized. 
+				c = (char) (str.charAt(i) + rotate);
+			if (((Character.isLowerCase(str.charAt(i)) && c > 'z' )
+					|| (Character.isUpperCase(str.charAt(i)) && c >'Z')))
+					
+					c = (char) (str.charAt(i) - (26 - rotate));
 			}
-}
-
+			strBuilder.append(c);
+		}
+		return strBuilder.toString();
+	}			
+}			
 	/**
 	 * 12. Given a number n, determine what the nth prime is.
 	 * 
@@ -516,7 +555,37 @@ public class EvaluationService {
 		 * @return
 		 */
 		public static String encode(String string) {
-			// TODO Write an implementation for this method declaration
+			
+			
+			
+			Scanner in = new Scanner(System.in);
+			String letters = "abcdefghijklmnopqrstuvwxyz";
+			String reverse = " ";
+			
+			for (int i= letters.length()-1; i > -1; i++){
+				reverse += letters.charAt(i);
+			}
+			String message = in.nextLine();
+			in.nextLine();
+			
+			message = message.toLowerCase();
+			
+			String encodeText = "";
+			
+			for (int i = 0; i < message.length(); i++) {
+				if(message.charAt(i) ==(char)32) {
+					encodeText += " ";
+				} else {
+					int count= 0;
+				for (int j =0; j <letters.length(); j++) {
+					if (message.charAt(i) == letters.charAt(j)) {
+						encodeText += reverse.charAt(j);
+						break;
+					}
+				}
+				} System.out.println(encodeText);
+			}in.close();// couldn't figure out how to space every five characters. 
+			
 			return null;
 		}
 //check the cypher from cs50. 
@@ -573,8 +642,31 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isPangram(String string) {
-		// TODO Write an implementation for this method declaration
-		return false;
+		//see if a sentences contains all letters. 26!
+		
+		boolean [] letters = new boolean[26];
+		for (int i = 0; i <string.length(); i++) {
+			int index = getIndex(string.charAt(i));
+			if (index >= 0 && index <= 26) {
+				letters[index] = true; 
+			}
+		}
+		for (int i = 0; i < letters.length; i++) {
+			if (!letters[i]) {
+				return false;
+			}
+		}
+		return true;
+		
+	}
+	
+	private int getIndex(char ch) {
+		int index = ch - 'a';
+		if (index < 0) {
+			index += 32;
+			
+		}
+		return index;
 	}
 
 	/**
@@ -677,9 +769,34 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int solveWordProblem(String string) {
-		// TODO Write an implementation for this method declaration}
-		return 0;}
+
+		String str1=string.replace("?", "");
+		String str[]= str1.split(" ");
+		int result = 0;
+		for (int i = 0; i <str.length; i++) {
+			// change the String with ParseInt so you can apply calculations to each part. 
+			// Integer parse according to the index in the array. Start from 0. 
+			if (str[3].contentEquals("plus")) {
+				result= Integer.parseInt(str[2])+Integer.parseInt(str[4]);
+			}
+			else  if (str[3].contentEquals("minus")) {
+				result= Integer.parseInt(str[2])-Integer.parseInt(str[4]);
+			}
+			else if (str[3].contentEquals("divided")) {
+				result= Integer.parseInt(str[2])/Integer.parseInt(str[5]);
+			}
+			else if (str[3].contentEquals("multiplied")) {
+				result= Integer.parseInt(str[2])*Integer.parseInt(str[5]);
+			}
+		}
+		
+		return 1;
+		}
+		
+
+	public static boolean islower(Object object) {
+		// TODO Auto-generated method stub
+		return false;
 	}
-	}
-	
+}		
 	
