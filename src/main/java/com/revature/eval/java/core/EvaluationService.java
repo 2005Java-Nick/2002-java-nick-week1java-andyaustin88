@@ -715,10 +715,14 @@ public class EvaluationService {
 	 * @return
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
-		return null;
 		
-		//cannot get rid of the errors. 
-	} 
+		
+		
+		LocalDateTime timePoint = LocalDateTime.now();
+		LocalDateTime newDateTime = timePoint.plus(1000000000, ChronoUnit.SECONDS.HOURS.DAYS.YEARS);
+		System.out.println(newDateTime);
+		return null;
+	}  
 		
 		
 		
