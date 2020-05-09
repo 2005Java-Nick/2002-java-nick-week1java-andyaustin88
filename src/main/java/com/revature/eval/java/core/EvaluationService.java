@@ -662,9 +662,34 @@ public class EvaluationService {
 	 * @return
 	 */
 	public boolean isValidIsbn(String string) {
-		// TODO Write an implementation for this method declaration
+		//check to see if the number's ten. 
+		
+		int n = string.length();
+		if (n != 10) {
 		return false;
-	}
+		}
+		
+		int sum = 0;
+		for (int i = 0; i < 9; i++)
+		{
+			int digit = string.charAt(i) - '0';
+			if (0 > digit || digit > 9)
+				return false;
+			sum += (digit * (10 - i));
+		}	
+			
+		//last digit 
+		char last = string.charAt(9);
+		if (last != 'X' && (last < '0' || last > '9'))
+			return false;
+		sum += ((last == 'X') ? 10: (last - '0'));
+		
+		if (sum % 11 == 0) {
+			return true;
+		}
+		return false;
+	}		
+	
 
 	/**
 	 * 16. Determine if a sentence is a pangram. A pangram (Greek: παν γράμμα, pan
@@ -747,7 +772,9 @@ public class EvaluationService {
 	 * @return
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		// TODO Write an implementation for this method declaration
+		int n = number;
+		int [] multiples;
+		
 		return 0;
 	}
 
